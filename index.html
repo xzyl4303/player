@@ -3,20 +3,40 @@
 <head>
     <title>在线视频播放器</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        #videoContainer {
+            width: 80%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
         #speedControlContainer {
             display: flex;
             align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-right: 10px;
         }
 
         #speedControl {
-            margin-left: 10px;
             width: 80px;
         }
     </style>
 </head>
 <body>
-    <input type="file" id="videoFile" accept="video/*">
-    <video id="videoPlayer" width="640" height="360" controls></video>
+    <div id="videoContainer">
+        <input type="file" id="videoFile" accept="video/*">
+        <video id="videoPlayer" width="100%" controls></video>
+    </div>
     <div id="speedControlContainer">
         <label for="speedControl">速度:</label>
         <select id="speedControl">
@@ -28,8 +48,6 @@
             <option value="4">4x</option>
             <option value="8">8x</option>
             <option value="16">16x</option>
-            <option value="32">32x</option>
-            <option value="64">64x</option>
         </select>
     </div>
 
