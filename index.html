@@ -1,35 +1,27 @@
-<body bgcolor=#000000>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>在线视频播放器</title>
+</head>
+<body>
+    <input type="file" id="videoFile" accept="video/*">
+    <video id="videoPlayer" width="640" height="360" controls></video>
+    <input type="range" id="speedControl" min="0.1" max="16" step="0.1" value="1">
 
-<p align=center>
+    <script>
+        const videoFileInput = document.getElementById('videoFile');
+        const videoPlayer = document.getElementById('videoPlayer');
+        const speedControl = document.getElementById('speedControl');
 
-<object id="mPlayer1" width="600" height="800" classid="CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6">
-　　　　<param name="URL" value="D:\example.mp4"/>
-        <param name="rate" value="1"/>
-        <param name="balance" value="0"/>
-        <param name="currentPosition" value="0"/>
-        <param name="defaultFrame" value/>
-        <param name="playCount" value="0"/>
-        <param name="autoStart" value="1"/>
-        <param name="currentMarker" value="0"/>
-        <param name="invokeURLs" value="1"/>
-        <param name="baseURL" value/>
-        <param name="volume" value="100"/>
-        <param name="mute" value="0"/>
-        <param name="uiMode" value="full"/>
-        <param name="stretchToFit" value="0"/>
-        <param name="windowlessVideo" value="0"/>
-        <param name="enabled" value="1"/>
-        <param name="enableContextMenu" value="1"/>
-        <param name="fullScreen" value="0"/>
-        <param name="SAMIStyle" value/>
-        <param name="SAMILang" value/>
-        <param name="SAMIFilename" value/>
-        <param name="captioningID" value/>
-        <param name="enableErrorDialogs" value="0"/>
-        <param name="_cx" value="7779"/>
-        <param name="_cy" value="1693"/>
-        <embed src="D:\example.mp4" width="600" height="800"/>
-      </object>
-</p>
+        videoFileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const objectURL = URL.createObjectURL(file);
+            videoPlayer.src = objectURL;
+        });
 
+        speedControl.addEventListener('input', function() {
+            videoPlayer.playbackRate = parseFloat(speedControl.value);
+        });
+    </script>
 </body>
+</html>
