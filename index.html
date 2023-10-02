@@ -10,7 +10,7 @@
 
         #speedControl {
             margin-left: 10px;
-            width: 60px;
+            width: 80px;
         }
     </style>
 </head>
@@ -19,15 +19,24 @@
     <video id="videoPlayer" width="640" height="360" controls></video>
     <div id="speedControlContainer">
         <label for="speedControl">速度:</label>
-        <input type="range" id="speedControl" min="0.1" max="16" step="0.1" value="1">
-        <span id="speedValue">1x</span>
+        <select id="speedControl">
+            <option value="0.1">0.1x</option>
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+            <option value="4">4x</option>
+            <option value="8">8x</option>
+            <option value="16">16x</option>
+            <option value="32">32x</option>
+            <option value="64">64x</option>
+        </select>
     </div>
 
     <script>
         const videoFileInput = document.getElementById('videoFile');
         const videoPlayer = document.getElementById('videoPlayer');
         const speedControl = document.getElementById('speedControl');
-        const speedValue = document.getElementById('speedValue');
 
         videoFileInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
@@ -35,10 +44,9 @@
             videoPlayer.src = objectURL;
         });
 
-        speedControl.addEventListener('input', function() {
+        speedControl.addEventListener('change', function() {
             const playbackRate = parseFloat(speedControl.value);
             videoPlayer.playbackRate = playbackRate;
-            speedValue.textContent = playbackRate + 'x';
         });
     </script>
 </body>
