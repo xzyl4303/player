@@ -2,16 +2,32 @@
 <html>
 <head>
     <title>在线视频播放器</title>
+    <style>
+        #speedControlContainer {
+            display: flex;
+            align-items: center;
+        }
+
+        #speedControl {
+            margin-left: 10px;
+            width: 60px;
+        }
+    </style>
 </head>
 <body>
     <input type="file" id="videoFile" accept="video/*">
     <video id="videoPlayer" width="640" height="360" controls></video>
-    <input type="range" id="speedControl" min="0.1" max="16" step="0.1" value="1">
+    <div id="speedControlContainer">
+        <label for="speedControl">速度:</label>
+        <input type="range" id="speedControl" min="0.1" max="16" step="0.1" value="1">
+        <span id="speedValue">1x</span>
+    </div>
 
     <script>
         const videoFileInput = document.getElementById('videoFile');
         const videoPlayer = document.getElementById('videoPlayer');
         const speedControl = document.getElementById('speedControl');
+        const speedValue = document.getElementById('speedValue');
 
         videoFileInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
@@ -20,7 +36,9 @@
         });
 
         speedControl.addEventListener('input', function() {
-            videoPlayer.playbackRate = parseFloat(speedControl.value);
+            const playbackRate = parseFloat(speedControl.value);
+            videoPlayer.playbackRate = playbackRate;
+            speedValue.textContent = playbackRate + 'x';
         });
     </script>
 </body>
