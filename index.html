@@ -19,15 +19,11 @@
             margin-bottom: 20px;
         }
 
-        #speedControlContainer,
-        #volumeControlContainer {
+        #controlContainer {
             display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        label {
-            margin-right: 10px;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 800px;
         }
 
         #speedControl,
@@ -42,24 +38,27 @@
         <input type="file" id="videoFile" accept="video/*">
         <video id="videoPlayer" width="100%" controls></video>
     </div>
-    <div id="speedControlContainer">
-        <label for="speedControl">速度:</label>
-        <select id="speedControl">
-            <option value="0.1">0.1x</option>
-            <option value="0.5">0.5x</option>
-            <option value="1" selected>1x</option>
-            <option value="1.5">1.5x</option>
-            <option value="2">2x</option>
-            <option value="4">4x</option>
-            <option value="8">8x</option>
-            <option value="16">16x</option>
-            <option value="32">32x</option>
-            <option value="64">64x</option>
-        </select>
-    </div>
-    <div id="volumeControlContainer">
-        <label for="volumeControl">音量:</label>
-        <input type="range" id="volumeControl" min="0" max="20" step="1" value="10">
+    <div id="controlContainer">
+        <div>
+            <label for="speedControl">速度:</label>
+            <select id="speedControl">
+                <option value="0.1">0.1x</option>
+                <option value="0.5">0.5x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2x</option>
+                <option value="4">4x</option>
+                <option value="8">8x</option>
+                <option value="16">16x</option>
+                <option value="32">32x</option>
+                <option value="64">64x</option>
+            </select>
+        </div>
+        <div>
+            <label for="volumeControl">音量:</label>
+            <input type="range" id="volumeControl" min="0" max="20" step="1" value="10">
+        </div>
+        <button id="loopButton">循环</button>
     </div>
 
     <script>
@@ -67,6 +66,7 @@
         const videoPlayer = document.getElementById('videoPlayer');
         const speedControl = document.getElementById('speedControl');
         const volumeControl = document.getElementById('volumeControl');
+        const loopButton = document.getElementById('loopButton');
 
         videoFileInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
@@ -82,6 +82,10 @@
         volumeControl.addEventListener('input', function() {
             const volumeLevel = parseInt(volumeControl.value) / 20;
             videoPlayer.volume = volumeLevel;
+        });
+
+        loopButton.addEventListener('click', function() {
+            videoPlayer.loop = !videoPlayer.loop;
         });
 
         // 监听键盘事件
