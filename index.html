@@ -1,23 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube风格视频播放器</title>
+    <title>在线视频播放器</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: black;
+            background-color: #f9f9f9;
         }
 
-        #videoContainer {
+        .video-container {
             width: 100%;
-            height: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 56.25%; /* 16:9 比例 */
             position: relative;
-            padding-bottom: 56.25%;
-            background-color: black;
         }
 
         #videoPlayer {
@@ -29,90 +27,82 @@
             background-color: black;
         }
 
-        #controls {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
+        .video-info {
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .video-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .video-description {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .controls {
+            margin-top: 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
+            justify-content: space-between;
         }
 
-        #playPauseBtn, #volumeBtn, #fullscreenBtn {
-            cursor: pointer;
-        }
-
-        #speedControl {
+        .speed-control {
             width: 80px;
+            margin-left: 20px;
         }
     </style>
 </head>
 <body>
-    <div id="videoContainer">
+    <div class="video-container">
         <video id="videoPlayer" controls></video>
-        <div id="controls">
+    </div>
+    <div class="video-info">
+        <div class="video-title">视频标题</div>
+        <div class="video-description">视频描述信息，视频描述信息，视频描述信息，视频描述信息，视频描述信息，视频描述信息。</div>
+        <div class="controls">
             <div>
-                <button id="playPauseBtn">播放</button>
-                <button id="volumeBtn">🔊</button>
+                <input type="file" id="videoFile" accept="video/*">
+                <label for="videoFile">选择视频</label>
             </div>
             <div>
                 <label for="speedControl">速度:</label>
-                <select id="speedControl">
+                <select id="speedControl" class="speed-control">
+                    <option value="0.1">0.1x</option>
                     <option value="0.5">0.5x</option>
                     <option value="1" selected>1x</option>
                     <option value="1.5">1.5x</option>
                     <option value="2">2x</option>
+                    <option value="4">4x</option>
+                    <option value="8">8x</option>
+                    <option value="16">16x</option>
+                    <option value="32">32x</option>
+                    <option value="64">64x</option>
                 </select>
-                <button id="fullscreenBtn">全屏</button>
             </div>
         </div>
     </div>
 
     <script>
+        const videoFileInput = document.getElementById('videoFile');
         const videoPlayer = document.getElementById('videoPlayer');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const volumeBtn = document.getElementById('volumeBtn');
         const speedControl = document.getElementById('speedControl');
-        const fullscreenBtn = document.getElementById('fullscreenBtn');
 
-        playPauseBtn.addEventListener('click', function() {
-            if (videoPlayer.paused || videoPlayer.ended) {
-                videoPlayer.play();
-                playPauseBtn.textContent = '暂停';
-            } else {
-                videoPlayer.pause();
-                playPauseBtn.textContent = '播放';
-            }
-        });
-
-        volumeBtn.addEventListener('click', function() {
-            if (videoPlayer.muted) {
-                videoPlayer.muted = false;
-                volumeBtn.textContent = '🔊';
-            } else {
-                videoPlayer.muted = true;
-                volumeBtn.textContent = '🔇';
-            }
+        videoFileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const objectURL = URL.createObjectURL(file);
+            videoPlayer.src = objectURL;
         });
 
         speedControl.addEventListener('change', function() {
             const playbackRate = parseFloat(speedControl.value);
             videoPlayer.playbackRate = playbackRate;
         });
-
-        fullscreenBtn.addEventListener('click', function() {
-            if (videoPlayer.requestFullscreen) {
-                videoPlayer.requestFullscreen();
-            } else if (videoPlayer.mozRequestFullScreen) {
-                videoPlayer.mozRequestFullScreen();
-            } else if (videoPlayer.webkitRequestFullscreen) {
-                videoPlayer.webkitRequestFullscreen();
-            }
-        });
     </script>
 </body>
 </html>
-
