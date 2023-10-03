@@ -5,32 +5,37 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 50px;
-            background-color: black;
-            color: white;
+            margin: 0;
+            padding: 0;
+            background-color: black; /* 背景颜色为黑色 */
         }
 
         #videoContainer {
-            width: 80%;
-            max-width: 1280px; /* 设置最大宽度 */
-            margin-bottom: 30px;
+            width: 100%;
+            height: 0;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 比例 */
         }
 
         #videoPlayer {
             width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: black;
         }
 
-        #speedControlContainer {
+        #controls {
+            background-color: rgba(0, 0, 0, 0.7); /* 控制栏背景颜色 */
+            color: white;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-        }
-
-        label {
-            margin-right: 10px;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
         }
 
         #speedControl {
@@ -40,23 +45,28 @@
 </head>
 <body>
     <div id="videoContainer">
-        <input type="file" id="videoFile" accept="video/*">
         <video id="videoPlayer" controls></video>
-    </div>
-    <div id="speedControlContainer">
-        <label for="speedControl">速度:</label>
-        <select id="speedControl">
-            <option value="0.1">0.1x</option>
-            <option value="0.5">0.5x</option>
-            <option value="1" selected>1x</option>
-            <option value="1.5">1.5x</option>
-            <option value="2">2x</option>
-            <option value="4">4x</option>
-            <option value="8">8x</option>
-            <option value="16">16x</option>
-            <option value="32">32x</option>
-            <option value="64">64x</option>
-        </select>
+        <div id="controls">
+            <div>
+                <input type="file" id="videoFile" accept="video/*">
+                <label for="videoFile">选择视频</label>
+            </div>
+            <div>
+                <label for="speedControl">速度:</label>
+                <select id="speedControl">
+                    <option value="0.1">0.1x</option>
+                    <option value="0.5">0.5x</option>
+                    <option value="1" selected>1x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                    <option value="4">4x</option>
+                    <option value="8">8x</option>
+                    <option value="16">16x</option>
+                    <option value="32">32x</option>
+                    <option value="64">64x</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <script>
