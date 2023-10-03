@@ -5,87 +5,62 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+            background-color: #181818; /* YouTube的背景颜色 */
+            color: white;
         }
 
-        .video-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: 56.25%; /* 16:9 比例 */
-            position: relative;
+        #videoContainer {
+            width: 90%;
+            max-width: 1000px;
+            margin-bottom: 20px;
+            background-color: #333; /* 播放器的背景颜色 */
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
         }
 
         #videoPlayer {
             width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: black;
+            border-radius: 10px;
         }
 
-        .video-info {
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
-        .video-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .video-description {
-            font-size: 16px;
-            color: #555;
-        }
-
-        .controls {
-            margin-top: 20px;
+        #speedControlContainer {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            margin-bottom: 20px;
         }
 
-        .speed-control {
+        label {
+            margin-right: 10px;
+        }
+
+        #speedControl {
             width: 80px;
-            margin-left: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="video-container">
+    <div id="videoContainer">
+        <input type="file" id="videoFile" accept="video/*">
         <video id="videoPlayer" controls></video>
     </div>
-    <div class="video-info">
-        <div class="video-title">视频标题</div>
-        <div class="video-description">视频描述信息，视频描述信息，视频描述信息，视频描述信息，视频描述信息，视频描述信息。</div>
-        <div class="controls">
-            <div>
-                <input type="file" id="videoFile" accept="video/*">
-                <label for="videoFile">选择视频</label>
-            </div>
-            <div>
-                <label for="speedControl">速度:</label>
-                <select id="speedControl" class="speed-control">
-                    <option value="0.1">0.1x</option>
-                    <option value="0.5">0.5x</option>
-                    <option value="1" selected>1x</option>
-                    <option value="1.5">1.5x</option>
-                    <option value="2">2x</option>
-                    <option value="4">4x</option>
-                    <option value="8">8x</option>
-                    <option value="16">16x</option>
-                    <option value="32">32x</option>
-                    <option value="64">64x</option>
-                </select>
-            </div>
-        </div>
+    <div id="speedControlContainer">
+        <label for="speedControl">速度:</label>
+        <select id="speedControl">
+            <option value="0.1">0.1x</option>
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+            <option value="4">4x</option>
+            <option value="8">8x</option>
+            <option value="16">16x</option>
+            <option value="32">32x</option>
+            <option value="64">64x</option>
+        </select>
     </div>
 
     <script>
