@@ -1,41 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>在线视频播放器</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube风格视频播放器</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: black;
         }
 
         #videoContainer {
             width: 100%;
-            height: 0;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #000;
             position: relative;
-            padding-bottom: 40%; /* 修改此处以调整视频容器的高度 */
         }
 
         #videoPlayer {
             width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: black;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 比例 */
+            background-color: #000;
         }
 
         #controls {
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
             position: absolute;
             bottom: 0;
-            width: 100%;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        #controls button {
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
         }
 
         #speedControl {
@@ -45,44 +54,43 @@
 </head>
 <body>
     <div id="videoContainer">
-        <video id="videoPlayer" controls></video>
+        <iframe id="videoPlayer" width="100%" height="100%" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
         <div id="controls">
-            <div>
-                <input type="file" id="videoFile" accept="video/*">
-                <label for="videoFile">选择视频</label>
-            </div>
+            <button id="playPauseBtn">播放</button>
             <div>
                 <label for="speedControl">速度:</label>
                 <select id="speedControl">
-                    <option value="0.1">0.1x</option>
+                    <option value="0.25">0.25x</option>
                     <option value="0.5">0.5x</option>
                     <option value="1" selected>1x</option>
                     <option value="1.5">1.5x</option>
                     <option value="2">2x</option>
-                    <option value="4">4x</option>
-                    <option value="8">8x</option>
-                    <option value="16">16x</option>
-                    <option value="32">32x</option>
-                    <option value="64">64x</option>
                 </select>
             </div>
         </div>
     </div>
 
     <script>
-        const videoFileInput = document.getElementById('videoFile');
         const videoPlayer = document.getElementById('videoPlayer');
+        const playPauseBtn = document.getElementById('playPauseBtn');
         const speedControl = document.getElementById('speedControl');
 
-        videoFileInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            const objectURL = URL.createObjectURL(file);
-            videoPlayer.src = objectURL;
+        let isPlaying = false;
+
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                videoPlayer.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                playPauseBtn.textContent = '播放';
+            } else {
+                videoPlayer.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                playPauseBtn.textContent = '暂停';
+            }
+            isPlaying = !isPlaying;
         });
 
-        speedControl.addEventListener('change', function() {
+        speedControl.addEventListener('change', () => {
             const playbackRate = parseFloat(speedControl.value);
-            videoPlayer.playbackRate = playbackRate;
+            videoPlayer.contentWindow.postMessage(`{"event":"command","func":"setPlaybackRate","args":[${playbackRate}]}`, '*');
         });
     </script>
 </body>
