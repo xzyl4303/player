@@ -9,14 +9,18 @@
             flex-direction: column;
             align-items: center;
             margin-top: 50px;
-            background-color: black; /* 设置背景颜色为黑色 */
-            color: white; /* 设置文本颜色为白色 */
+            background-color: black;
+            color: white;
         }
 
         #videoContainer {
             width: 80%;
-            max-width: 800px;
-            margin-bottom: 20px;
+            max-width: 1280px; /* 设置最大宽度 */
+            margin-bottom: 30px;
+        }
+
+        #videoPlayer {
+            width: 100%;
         }
 
         #speedControlContainer {
@@ -37,7 +41,7 @@
 <body>
     <div id="videoContainer">
         <input type="file" id="videoFile" accept="video/*">
-        <video id="videoPlayer" width="100%" controls></video>
+        <video id="videoPlayer" controls></video>
     </div>
     <div id="speedControlContainer">
         <label for="speedControl">速度:</label>
